@@ -24,10 +24,10 @@ void Autonomous(){
   leftVic1.Set(0.5);
   leftVic2.Set(0.5);
   rightVic1.Set(-0.5);
-  rightVic2.Set(-0.5);
+  rightVic2.Set(-0.5);  //move forward for 2 seconds
   Wait(2.0);
   leftVic1.Set(0);
-  leftVic2.Set(0);
+  leftVic2.Set(0);  //stop until further commands
   rightVic1.Set(0);
   rightVic2.Set(0);
 }
