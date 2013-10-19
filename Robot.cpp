@@ -13,7 +13,7 @@ Victor rightVic2;
 public:
 MyRobot() :
   leftVic1(PORT_DRIVE_VIC_1),
-  leftVic2(PORT_DRIVE_VIC_2), //initialization/constructora
+  leftVic2(PORT_DRIVE_VIC_2), //initialization list (saves memory)
   rightVic1(PORT_DRIVE_VIC_3),
   rightVic2(PORT_DRIVE_VIC_4)
 {
