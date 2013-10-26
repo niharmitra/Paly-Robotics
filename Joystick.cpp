@@ -85,7 +85,7 @@ void TeleopPeriodic() {
 
 }
 
-voidTeleopDisabled() {
+void TeleopDisabled() {
   leftVic1.Set(0);
   leftVic2.Set(0);
   rightVic1.Set(0);
