@@ -25,6 +25,7 @@ Joystick speedStick;
 Joystick turnStick;
 Joystick operatorStick;
 
+
 public:
 MyRobot() :
   leftVic1(PORT_DRIVE_VIC_1),
@@ -37,13 +38,20 @@ MyRobot() :
 {
 
 }
+  void AutonomousInit();
+  void AutonomousPeriodic();
+  void AutonomousDisabled();
+  void TeleopInit();
+  void TeleopPeriodic();
+  void TeleopDisabled();
+};
 
 
-void AutonomousInit() {
+void MyRobot::AutonomousInit() {
 t.Start(); //start the timer
 }
 
-void AutonomousPeriodic(){
+void MyRobot::AutonomousPeriodic(){
   
   if(t.Get() < 2.0) { //during the first 2 seconds, turn right
   leftVic1.Set(0.5);
@@ -60,7 +68,7 @@ void AutonomousPeriodic(){
   }
 }
 
-void AutonomousDisabled(){
+void MyRobot::AutonomousDisabled(){
   //set all speeds to zero after Autonomous ends
   leftVic1.Set(0);
   leftVic2.Set(0);
@@ -69,11 +77,11 @@ void AutonomousDisabled(){
 
 }
 
-void TeleopInit() {
+void MyRobot::TeleopInit() {
 
 }
 
-void TeleopPeriodic() {
+void MyRobot::TeleopPeriodic() {
   //Joystick.GetY() returns value b/w -1 and 1
     
     //takes the input from the joysticks and multiplies it by a constant
@@ -88,7 +96,7 @@ void TeleopPeriodic() {
 
 }
 
-void TeleopDisabled() {
+void MyRobot::TeleopDisabled() {
   leftVic1.Set(0);
   leftVic2.Set(0);
   rightVic1.Set(0);
