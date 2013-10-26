@@ -5,6 +5,13 @@ Autonomous: Rotates 90 degrees left, then right, like calibration
 
 */
 #include "WPIlib.h"
+#define PORT_DRIVE_VIC_1 5 //macro substitutes first part with second whenever first is used
+#define PORT_DRIVE_VIC_2 10
+#define PORT_DRIVE_VIC_3 2
+#define PORT_DRIVE_VIC_4 1
+#define PORT_JS_1 1
+#define PORT_JS_2 2
+#define PORT_JS_3 3
 
 //sets up 
 class MyRobot : public IterativeRobot {
@@ -14,6 +21,7 @@ Victor leftVic2;
 Victor rightVic1;
 Victor rightVic2;
 Timer t;
+Joystick SpeedStick
 
 
 public:
@@ -25,6 +33,7 @@ MyRobot() :
 {
 
 }
+
 
 void AutonomousInit() {
 t.Start(); //start the timer
