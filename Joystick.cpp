@@ -25,8 +25,6 @@ Joystick speedStick;
 Joystick turnStick;
 Joystick operatorStick;
 
-
-
 public:
 MyRobot() :
   leftVic1(PORT_DRIVE_VIC_1),
@@ -69,19 +67,27 @@ void AutonomousDisabled(){
 }
 
 void TeleopInit() {
-  
+
 }
 
 void TeleopPeriodic() {
-  
+  //Joystick.GetY() returns value b/w -1 and 1
+    
+    //takes the input from the joysticks and multiplies it by a constant
+    float speed = 1.0 * speedStick.GetY(); 
+    float turn = 1.0 * turnStick.GetX(); 
+    float input = speed - turn;
+
+    leftVic1.Set(-input);
+    leftVic2.Set(-input);
+    rightVic1.Set(input);
+    rightVic2.Set(input);
+
 }
 
 voidTeleopDisabled() {
-  
+    leftVic1.Set(0);
+  leftVic2.Set(0);
+  rightVic1.Set(0);
+  rightVic2.Set(0);
 }
-
-
-
-
-
-
