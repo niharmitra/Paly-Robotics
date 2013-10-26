@@ -102,3 +102,5 @@ void MyRobot::TeleopDisabled() {
   rightVic1.Set(0);
   rightVic2.Set(0);
 }
+
+START_ROBOT_CLASS(MyRobot);
