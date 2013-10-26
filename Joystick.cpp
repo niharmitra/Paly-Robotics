@@ -6,7 +6,7 @@ Autonomous: Rotates 90 degrees left, then right, like calibration
 */
 #include "WPIlib.h"
 
-
+//sets up 
 class MyRobot : public IterativeRobot {
 
 Victor leftVic1;
@@ -26,11 +26,11 @@ MyRobot() :
 
 }
 
-AutonomousInit() {
-t.start();
+void AutonomousInit() {
+t.Start(); //start the timer
 }
 
-AutonomousPeriodic(){
+void AutonomousPeriodic(){
   
   if(t.Get() < 2.0) { //during the first 2 seconds, turn right
   leftVic1.Set(0.5);
@@ -39,14 +39,33 @@ AutonomousPeriodic(){
   rightVic2.Set(0);
   }
   
-  else if(t.Get()<4.0) { //during next 2 seconds (2-->4)
-  
+  else if(t.Get() < 4.0) { //during next 2 seconds (2-->4), turn left
+  leftVic1.Set(0);
+  leftVic2.Set(0);
+  rightVic1.Set(0.5);
+  rightVic2.Set(0.5);
   }
 }
 
-AutonomousDisabled(){
-  
+void AutonomousDisabled(){
+  //set all speeds to zero after Autonomous ends
+  leftVic1.Set(0);
+  leftVic2.Set(0);
+  rightVic1.Set(0);
+  rightVic2.Set(0);
 
+}
+
+void TeleopInit() {
+  
+}
+
+void TeleopPeriodic() {
+  
+}
+
+voidTeleopDisabled() {
+  
 }
 
 
