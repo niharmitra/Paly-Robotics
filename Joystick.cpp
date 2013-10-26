@@ -21,7 +21,10 @@ Victor leftVic2;
 Victor rightVic1;
 Victor rightVic2;
 Timer t;
-Joystick SpeedStick
+Joystick speedStick;
+Joystick turnStick;
+Joystick operatorStick;
+
 
 
 public:
