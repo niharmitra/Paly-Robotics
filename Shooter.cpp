@@ -6,8 +6,17 @@
 #define PORT_JS_SPEED 1
 #define PORT_JS_TURN 2
 #define PORT_JS_OPERATOR 3
+#define PORT_SHOOTER_VIC_1
+#define PORT_SHOOTER_VIC_2
 
 //sets up
+enum {
+  IDLE,
+  SPIN_UP,
+  EXTENDING,
+  RECEDING
+}
+
 class MyRobot : public IterativeRobot {
 
 Victor leftVic1;
@@ -39,4 +48,37 @@ MyRobot() :
   void TeleopPeriodic();
   void TeleopDisabled();
 };
+
+void MyRobot::AutonomousInit()
+{
+  
+}
+
+void MyRobot::AutonomousPeriodic()
+{
+  
+}
+
+void MyRobot::AutonomousDisabled()
+{
+  
+}
+
+void MyRobot::TeleopInit() 
+{
+
+}
+
+void MyRobot::TeleopPeriodic()
+{
+  
+}
+
+void MyRobot::TeleopDisabled() 
+{
+  leftVic1.Set(0);
+  leftVic2.Set(0);
+  rightVic1.Set(0);
+  rightVic2.Set(0);
+}
 
