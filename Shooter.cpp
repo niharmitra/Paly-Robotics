@@ -6,9 +6,11 @@
 #define PORT_JS_SPEED 1
 #define PORT_JS_TURN 2
 #define PORT_JS_OPERATOR 3
-#define PORT_SHOOTER_VICO_1
-#define PORT_SHOOTER_VIC_2
+#define PORT_SHOOTER_VIC_1 3
+#define PORT_SHOOTER_VIC_2 4
 #define SHOOT_SPEED 0.5
+#define PORT_COMPRESSOR 1
+#define SPIN_WAIT 5000
 
 //sets up
 enum {
@@ -16,7 +18,7 @@ enum {
   SPIN_UP,
   EXTENDING,
   RECEDING
-}
+} shooterState;
 
 class MyRobot : public IterativeRobot {
 
@@ -28,6 +30,7 @@ Timer t;
 Joystick speedStick;
 Joystick turnStick;
 Joystick operatorStick;
+Victor 
 
 
 public:
@@ -74,18 +77,24 @@ void MyRobot::TeleopPeriodic()
 {
   if(shooterState == IDLE){
     //if trigger pressed, change to SPIN_UP
+    if(operatorStick.GetTrigger()){
+      shooterState = SPIN_UP
+    }
   }
   
   else if(shooterState == SPIN_UP){
     //if max speed reached, change to EXTENDING
+     
   }
   
   else if(shooterState == EXTENDING){
     //if frisbee shot, change to RECEDING
+    
   }
   
   else if(shooterState == RECEDING){
     //if piston receeded, change to IDLE
+    
   }
 }
 
