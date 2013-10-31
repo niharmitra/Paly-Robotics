@@ -6,8 +6,9 @@
 #define PORT_JS_SPEED 1
 #define PORT_JS_TURN 2
 #define PORT_JS_OPERATOR 3
-#define PORT_SHOOTER_VIC_1
+#define PORT_SHOOTER_VICO_1
 #define PORT_SHOOTER_VIC_2
+#define SHOOT_SPEED 0.5
 
 //sets up
 enum {
@@ -72,19 +73,19 @@ void MyRobot::TeleopInit()
 void MyRobot::TeleopPeriodic()
 {
   if(shooterState == IDLE){
-    
+    //if trigger pressed, change to SPIN_UP
   }
   
   else if(shooterState == SPIN_UP){
-    
+    //if max speed reached, change to EXTENDING
   }
   
   else if(shooterState == EXTENDING){
-    
+    //if frisbee shot, change to RECEDING
   }
   
   else if(shooterState == RECEDING){
-    
+    //if piston receeded, change to IDLE
   }
 }
 
@@ -95,4 +96,3 @@ void MyRobot::TeleopDisabled()
   rightVic1.Set(0);
   rightVic2.Set(0);
 }
-
