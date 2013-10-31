@@ -71,7 +71,21 @@ void MyRobot::TeleopInit()
 
 void MyRobot::TeleopPeriodic()
 {
+  if(shooterState == IDLE){
+    
+  }
   
+  else if(shooterState == SPIN_UP){
+    
+  }
+  
+  else if(shooterState == EXTENDING){
+    
+  }
+  
+  else if(shooterState == RECEDING){
+    
+  }
 }
 
 void MyRobot::TeleopDisabled() 
