@@ -7,6 +7,7 @@
 #define PORT_PISTON
 #define PORT_COMPRESSOR_RELAY 1 //port for the compressor relay
 #define PORT_COMPRESSOR_CUTOFF 1 //port for the compressor cutoff
+#define PORT_SHOOTER_SOL 5 //solenoid port
 #define SPIN_WAIT 5000 //how long to wait while spinning up to speed
 #define SHOOT_SPEED 0.5 //speed for shooter motors
 
@@ -31,7 +32,8 @@ public:
 MyRobot() :
   operatorStick(PORT_JS_OPERATOR),
   shootVic1(PORT_SHOOTER_VIC_1),
-  shootVic2(PORT_SHOOTER_VIC_2)
+  shootVic2(PORT_SHOOTER_VIC_2),
+  shooterSol(PORT_SHOOTER_SOL)
   
 {
 
