@@ -128,12 +128,15 @@ void MyRobot::TeleopPeriodic()
   
   else if(shooterState == RETRACTING)
   {
+    //the shooter vics remain at maximum speed, because it saves energy if shooting rapidly
+    shooterVic1.Set(1.0);
+    shooterVic2.Set(1.0);
     shooterSol.Set(false);
-    
     //if piston retracted(guess based on time), change to IDLE
     if(shooterTimer>=SHOOTER_RETRACT_WAIT)
     {
-      
+      shooterState=IDLE;
+      shooterTimer.Stop();
     }
   }
 }
