@@ -2,8 +2,14 @@
 
 #include "WPIlib.h"
 #define PORT_JS_OPERATOR 3 //port for the operator joystick
+#define PORT_JS_SPEED 1
+#define PORT_JS_TURN 2
 #define PORT_SHOOTER_VIC_1 3 //port for one shooter motor
 #define PORT_SHOOTER_VIC_2 4 //port for the other shooter motor
+#define PORT_DRIVE_VIC_1 5 //PORTS FOR DRIVER VICS
+#define PORT_DRIVE_VIC_2 10
+#define PORT_DRIVE_VIC_3 2
+#define PORT_DRIVE_VIC_4 1
 #define PORT_PISTON
 #define PORT_COMPRESSOR_RELAY 1 //port for the compressor relay
 #define PORT_COMPRESSOR_CUTOFF 1 //port for the compressor cutoff
@@ -11,7 +17,6 @@
 #define SHOOTER_SPIN_WAIT 5.0 //how long to wait while spinning up to speed
 #define SHOOTER_EXTEND_WAIT 5.0 //how long to wait while extending
 #define SHOOTER_RETRACT_WAIT 6.0 //hgow long to wait while rectracting
-
 
 //labels the states with more useable names
 enum {
@@ -32,6 +37,12 @@ Timer shooterTimer;
 //initialization list (constructor)
 public:
 MyRobot() :
+  leftVic1(PORT_DRIVE_VIC_1),
+  leftVic2(PORT_DRIVE_VIC_2),
+  rightVic1(PORT_DRIVE_VIC_3),
+  rightVic2(PORT_DRIVE_VIC_4),
+  speedStick(PORT_JS_SPEED),
+  turnStick(PORT_JS_TURN),
   operatorStick(PORT_JS_OPERATOR),
   shooterVic1(PORT_SHOOTER_VIC_1),
   shooterVic2(PORT_SHOOTER_VIC_2),
@@ -56,19 +67,31 @@ void MyRobot::RobotInit()
   c->Start();
 }
 
-void MyRobot::AutonomousInit()
-{
-  
+void MyRobot::AutonomousInit(){
+  t.Start(); //start the timer
 }
 
-void MyRobot::AutonomousPeriodic()
-{
-  
+void MyRobot::AutonomousPeriodic(){
+  if(t.Get() < 2.0) { //during the first 2 seconds, turn right
+  leftVic1.Set(0.5);
+  leftVic2.Set(0.5);
+  rightVic1.Set(0);
+  rightVic2.Set(0);
+  }
+  else if(t.Get() < 4.0) { //during next 2 seconds (2-->4), turn left
+  leftVic1.Set(0);
+  leftVic2.Set(0);
+  rightVic1.Set(0.5);
+  rightVic2.Set(0.5);
+  }
 }
 
-void MyRobot::AutonomousDisabled()
-{
-  
+void MyRobot::AutonomousDisabled(){
+   //set all speeds to zero after Autonomous ends
+  leftVic1.Set(0);
+  leftVic2.Set(0);
+  rightVic1.Set(0);
+  rightVic2.Set(0);
 }
 
 void MyRobot::TeleopInit() 
@@ -78,6 +101,17 @@ void MyRobot::TeleopInit()
 
 void MyRobot::TeleopPeriodic()
 {
+  //Joystick.GetY() returns value b/w -1 and 1
+    
+    //takes the input from the joysticks and multiplies it by a constant
+    float speed = 1.0 * speedStick.GetY(); 
+    float turn = 1.0 * turnStick.GetX(); 
+    float input = speed - turn;
+
+    leftVic1.Set(-input);
+    leftVic2.Set(-input);
+    rightVic1.Set(input);
+    rightVic2.Set(input);
   if(shooterState == IDLE)
   {
     //turn everything off
@@ -143,5 +177,9 @@ void MyRobot::TeleopPeriodic()
 
 void MyRobot::TeleopDisabled() 
 {
-  
+  leftVic1.Set(0);
+  leftVic2.Set(0);
+  rightVic1.Set(0);
+  rightVic2.Set(0);
 }
+START_ROBOT_CLASS(MyRobot);
