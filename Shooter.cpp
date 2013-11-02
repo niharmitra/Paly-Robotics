@@ -8,7 +8,9 @@
 #define PORT_COMPRESSOR_RELAY 1 //port for the compressor relay
 #define PORT_COMPRESSOR_CUTOFF 1 //port for the compressor cutoff
 #define PORT_SHOOTER_SOL 5 //solenoid port
-#define SPIN_WAIT 5 //how long to wait while spinning up to speed
+#define SHOOTER_SPIN_WAIT 5.0 //how long to wait while spinning up to speed
+#define SHOOTER_EXTEND_WAIT 5.0 //how long to wait while extending
+#define SHOOTER_RETRACT_WAIT 6.0 //hgow long to wait while rectracting
 
 
 //labels the states with more useable names
@@ -78,13 +80,16 @@ void MyRobot::TeleopPeriodic()
 {
   if(shooterState == IDLE)
   {
+    //turn everything off
     shooterVic1.Set(0.0);
     shooterVic2.Set(0.0);
     shooterSol.Set(false);
+    
     //if trigger pressed, change to SPIN_UP
     if(operatorStick.GetTrigger())
     {
       shooterState = SPIN_UP;
+      //restarts timer (just in case) for usage
       shooterTimer.Reset();
       shooterTimer.Start();
     }
@@ -92,23 +97,44 @@ void MyRobot::TeleopPeriodic()
   
   else if(shooterState == SPIN_UP)
   {
+    //start accelerating to max speed
     shooterVic1.Set(1.0);
     shooterVic2.Set(1.0);
     shooterSol.Set(false);
-    //if max speed reached, change to EXTENDING
     
+    //if max speed reached(hoperfully), change to EXTENDING
+    if(shooterTimer.Get()>=SHOOTER_SPIN_WAIT)
+    {
+      shooterState = EXTENDING;
+      //restarts the timer to be used for how long it takes to extend
+      shooterTimer.Reset();
+      shooterTimer.Start();
+    }
   }
-  
   else if(shooterState == EXTENDING)
   {
-    //if frisbee shot, change to RECEDING
-    
+    shooterVic1.Set(1.0);
+    shooterVic2.Set(1.0);
+    shooterSol.Set(true);
+
+    //if frisbee shot(guesseed based on timer, change to RECEDING
+    if(shooterTimer>=SHOOTER_EXTEND_WAIT)
+    {
+      shooterState = RETRACTING;
+      shooterTimer.Reset();
+      shooterTimer.Start();
+    }
   }
   
-  else if(shooterState == RECEDING)
+  else if(shooterState == RETRACTING)
   {
-    //if piston receeded, change to IDLE
+    shooterSol.Set(false);
     
+    //if piston retracted(guess based on time), change to IDLE
+    if(shooterTimer>=SHOOTER_RETRACT_WAIT)
+    {
+      
+    }
   }
 }
 
