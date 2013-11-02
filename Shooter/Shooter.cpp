@@ -79,7 +79,6 @@ void MyRobot::RobotInit()
 
 void MyRobot::AutonomousInit(){
   t.Start(); //start the timer
-  printf("NO WILLIAM!!!\n");
 }
 
 void MyRobot::AutonomousPeriodic(){
@@ -113,7 +112,6 @@ void MyRobot::TeleopInit()
 void MyRobot::TeleopPeriodic()
 {
   //Joystick.GetY() returns value b/w -1 and 1
-    printf("STOP MESSING IT ALL UP WILLIAM!!\n");
     //takes the input from the joysticks and multiplies it by a constant
     float speed = 1.0 * speedStick.GetY(); 
     float turn = 1.0 * turnStick.GetX(); 
