@@ -163,7 +163,7 @@ void MyRobot::TeleopPeriodic()
     shooterSol.Set(true);
 
     //if frisbee shot(guesseed based on timer, change to RECEDING
-    if(shooterTimer>=SHOOTER_EXTEND_WAIT)
+    if(shooterTimer.Get()>=SHOOTER_EXTEND_WAIT)
     {
       shooterState = RETRACTING;
       shooterTimer.Reset();
@@ -178,7 +178,7 @@ void MyRobot::TeleopPeriodic()
     shooterVic2.Set(1.0);
     shooterSol.Set(false);
     //if piston retracted(guess based on time), change to IDLE
-    if(shooterTimer>=SHOOTER_RETRACT_WAIT)
+    if(shooterTimer.Get()>=SHOOTER_RETRACT_WAIT)
     {
       shooterState=IDLE;
       shooterTimer.Stop();
