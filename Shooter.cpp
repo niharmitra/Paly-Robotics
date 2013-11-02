@@ -8,8 +8,7 @@
 #define PORT_COMPRESSOR_RELAY 1 //port for the compressor relay
 #define PORT_COMPRESSOR_CUTOFF 1 //port for the compressor cutoff
 #define PORT_SHOOTER_SOL 5 //solenoid port
-#define SPIN_WAIT 5000 //how long to wait while spinning up to speed
-#define SHOOT_SPEED 0.5 //speed for shooter motors
+#define SPIN_WAIT 5 //how long to wait while spinning up to speed
 
 
 //labels the states with more useable names
@@ -23,18 +22,18 @@ enum {
 class MyRobot : public IterativeRobot {
 
 Joystick operatorStick;
-Victor shootVic1;
-Victor shootVic2;
+Victor shooterVic1;
+Victor shooterVic2;
 Solenoid shooterSol;
+Timer shooterTimer;
 
 //initialization list (constructor)
 public:
 MyRobot() :
   operatorStick(PORT_JS_OPERATOR),
-  shootVic1(PORT_SHOOTER_VIC_1),
-  shootVic2(PORT_SHOOTER_VIC_2),
+  shooterVic1(PORT_SHOOTER_VIC_1),
+  shooterVic2(PORT_SHOOTER_VIC_2),
   shooterSol(PORT_SHOOTER_SOL)
-  
 {
 
 }
@@ -79,17 +78,25 @@ void MyRobot::TeleopPeriodic()
 {
   if(shooterState == IDLE)
   {
+    shooterVic1.Set(0.0);
+    shooterVic2.Set(0.0);
+    shooterSol.Set(false);
     //if trigger pressed, change to SPIN_UP
     if(operatorStick.GetTrigger())
     {
-      shooterState = SPIN_UP
+      shooterState = SPIN_UP;
+      shooterTimer.Reset();
+      shooterTimer.Start();
     }
   }
   
   else if(shooterState == SPIN_UP)
   {
+    shooterVic1.Set(1.0);
+    shooterVic2.Set(1.0);
+    shooterSol.Set(false);
     //if max speed reached, change to EXTENDING
-     
+    
   }
   
   else if(shooterState == EXTENDING)
