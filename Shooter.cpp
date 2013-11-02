@@ -23,7 +23,7 @@ enum {
   IDLE,
   SPIN_UP,
   EXTENDING,
-  RECEDING
+  RETRACTING
 } shooterState;
 
 class MyRobot : public IterativeRobot {
