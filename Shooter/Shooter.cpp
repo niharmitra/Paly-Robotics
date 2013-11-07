@@ -14,8 +14,8 @@
 #define PORT_COMPRESSOR_RELAY 1 //port for the compressor relay
 #define PORT_COMPRESSOR_CUTOFF 1 //port for the compressor cutoff
 #define PORT_SHOOTER_SOL 5 //solenoid port
-#define SHOOTER_SPIN_WAIT 5.0 //how long to wait while spinning up to speed
-#define SHOOTER_EXTEND_WAIT 5.0 //how long to wait while extending
+#define SHOOTER_SPIN_WAIT 1.0 //how long to wait while spinning up to speed
+#define SHOOTER_EXTEND_WAIT 1.0 //how long to wait while extending
 #define SHOOTER_RETRACT_WAIT 6.0 //hgow long to wait while rectracting
 
 //labels the states with more useable names
