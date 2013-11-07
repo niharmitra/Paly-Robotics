@@ -57,7 +57,8 @@ MyRobot() :
   operatorStick(PORT_JS_OPERATOR),
   shooterVic1(PORT_SHOOTER_VIC_1),
   shooterVic2(PORT_SHOOTER_VIC_2),
-  shooterSol(PORT_SHOOTER_SOL)
+  shooterSol(PORT_SHOOTER_SOL),
+  shooterState(IDLE)
 {
 
 }
@@ -107,7 +108,7 @@ void MyRobot::AutonomousDisabled(){
 
 void MyRobot::TeleopInit() 
 {
-
+  shooterState = IDLE;
 }
 
 void MyRobot::TeleopPeriodic()
