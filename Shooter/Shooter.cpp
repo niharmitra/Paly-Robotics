@@ -17,6 +17,7 @@
 #define SHOOTER_SPIN_WAIT 1.0 //how long to wait while spinning up to speed
 #define SHOOTER_EXTEND_WAIT 1.0 //how long to wait while extending
 #define SHOOTER_RETRACT_WAIT 6.0 //hgow long to wait while rectracting
+#define MAX_SPEED 0.3
 
 //labels the states with more useable names
 enum {
@@ -141,8 +142,8 @@ void MyRobot::TeleopPeriodic()
   else if(shooterState == SPIN_UP)
   {
     //start accelerating to max speed
-    shooterVic1.Set(0.3);
-    shooterVic2.Set(0.3); //for safety reasons, change later
+    shooterVic1.Set(MAX_SPEED);
+    shooterVic2.Set(MAX_SPEED); //for safety reasons, change later
     shooterSol.Set(false);
     
     //if max speed reached(hoperfully), change to EXTENDING
@@ -156,8 +157,8 @@ void MyRobot::TeleopPeriodic()
   }
   else if(shooterState == EXTENDING)
   {
-    shooterVic1.Set(1.0);
-    shooterVic2.Set(1.0);
+    shooterVic1.Set(MAX_SPEED);
+    shooterVic2.Set(MAX_SPEED);
     shooterSol.Set(true);
 
     //if frisbee shot(guesseed based on timer, change to RECEDING
@@ -172,8 +173,8 @@ void MyRobot::TeleopPeriodic()
   else if(shooterState == RETRACTING)
   {
     //the shooter vics remain at maximum speed, because it saves energy if shooting rapidly
-    shooterVic1.Set(1.0);
-    shooterVic2.Set(1.0);
+    shooterVic1.Set(MAX_SPEED);
+    shooterVic2.Set(MAX_SPEED);
     shooterSol.Set(false);
     //if piston retracted(guess based on time), change to IDLE
     if(shooterTimer.Get()>=SHOOTER_RETRACT_WAIT)
