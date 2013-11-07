@@ -141,8 +141,8 @@ void MyRobot::TeleopPeriodic()
   else if(shooterState == SPIN_UP)
   {
     //start accelerating to max speed
-    shooterVic1.Set(1.0);
-    shooterVic2.Set(1.0);
+    shooterVic1.Set(0.3);
+    shooterVic2.Set(0.3); //for safety reasons, change later
     shooterSol.Set(false);
     
     //if max speed reached(hoperfully), change to EXTENDING
