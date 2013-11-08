@@ -123,68 +123,70 @@ void MyRobot::TeleopPeriodic()
     leftVic2.Set(-input);
     rightVic1.Set(input);
     rightVic2.Set(input);
-  if(shooterState == IDLE)
-  {
-    //turn everything off
-    shooterVic1.Set(0.0);
-    shooterVic2.Set(0.0);
-    shooterSol.Set(false);
-    
-    //if trigger pressed, change to SPIN_UP
-    if(operatorStick.GetTrigger())
-    {
-      shooterState = SPIN_UP;
-      //restarts timer (just in case) for usage
-      shooterTimer.Reset();
-      shooterTimer.Start();
+  switch(shooterState){
+    case IDLE {
+      //turn everything off
+      shooterVic1.Set(0.0);
+      shooterVic2.Set(0.0);
+      shooterSol.Set(false);
+      
+      //if trigger pressed, change to SPIN_UP
+      if(operatorStick.GetTrigger())
+      {
+        shooterState = SPIN_UP;
+        //restarts timer (just in case) for usage
+        shooterTimer.Reset();
+        shooterTimer.Start();
+        break;
+      }
     }
-  }
+    case SPIN_UP{
+      //start accelerating to max speed
+      shooterVic1.Set(MAX_SPEED);
+      shooterVic2.Set(MAX_SPEED); //for safety reasons, change later
+      shooterSol.Set(false);
+      
+      //if max speed reached(hoperfully), change to EXTENDING
+      if(shooterTimer.Get()>=SHOOTER_SPIN_WAIT)
+      {
+        shooterState = EXTENDING;
+        //restarts the timer to be used for how long it takes to extend
+        shooterTimer.Reset();
+        shooterTimer.Start();
+        break;
+      }
+    }
+    case EXTENDING
+    {
+      shooterVic1.Set(MAX_SPEED);
+      shooterVic2.Set(MAX_SPEED);
+      shooterSol.Set(true);
   
-  else if(shooterState == SPIN_UP)
-  {
-    //start accelerating to max speed
-    shooterVic1.Set(MAX_SPEED);
-    shooterVic2.Set(MAX_SPEED); //for safety reasons, change later
-    shooterSol.Set(false);
-    
-    //if max speed reached(hoperfully), change to EXTENDING
-    if(shooterTimer.Get()>=SHOOTER_SPIN_WAIT)
-    {
-      shooterState = EXTENDING;
-      //restarts the timer to be used for how long it takes to extend
-      shooterTimer.Reset();
-      shooterTimer.Start();
+      //if frisbee shot(guesseed based on timer, change to RECEDING
+      if(shooterTimer.Get()>=SHOOTER_EXTEND_WAIT)
+      {
+        shooterState = RETRACTING;
+        shooterTimer.Reset();
+        shooterTimer.Start();
+        break;
+      }
     }
-  }
-  else if(shooterState == EXTENDING)
-  {
-    shooterVic1.Set(MAX_SPEED);
-    shooterVic2.Set(MAX_SPEED);
-    shooterSol.Set(true);
-
-    //if frisbee shot(guesseed based on timer, change to RECEDING
-    if(shooterTimer.Get()>=SHOOTER_EXTEND_WAIT)
-    {
-      shooterState = RETRACTING;
-      shooterTimer.Reset();
-      shooterTimer.Start();
-    }
-  }
   
-  else if(shooterState == RETRACTING)
-  {
-    //the shooter vics remain at maximum speed, because it saves energy if shooting rapidly
-    shooterVic1.Set(MAX_SPEED);
-    shooterVic2.Set(MAX_SPEED);
-    shooterSol.Set(false);
-    //if piston retracted(guess based on time), change to IDLE
-    if(shooterTimer.Get()>=SHOOTER_RETRACT_WAIT)
+    case RETRACTING
     {
-      shooterState=IDLE;
-      shooterTimer.Stop();
+      //the shooter vics remain at maximum speed, because it saves energy if shooting rapidly
+      shooterVic1.Set(MAX_SPEED);
+      shooterVic2.Set(MAX_SPEED);
+      shooterSol.Set(false);
+      //if piston retracted(guess based on time), change to IDLE
+      if(shooterTimer.Get()>=SHOOTER_RETRACT_WAIT)
+      {
+        shooterState=IDLE;
+        shooterTimer.Stop();
+        break;
+      }
     }
   }
-}
 
 void MyRobot::TeleopDisabled() 
 {
