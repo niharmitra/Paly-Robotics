@@ -124,7 +124,7 @@ void MyRobot::TeleopPeriodic()
     rightVic1.Set(input);
     rightVic2.Set(input);
   switch(shooterState){
-    case IDLE {
+    case IDLE: {
       //turn everything off
       shooterVic1.Set(0.0);
       shooterVic2.Set(0.0);
@@ -140,7 +140,7 @@ void MyRobot::TeleopPeriodic()
         break;
       }
     }
-    case SPIN_UP{
+    case SPIN_UP: {
       //start accelerating to max speed
       shooterVic1.Set(MAX_SPEED);
       shooterVic2.Set(MAX_SPEED); //for safety reasons, change later
@@ -156,8 +156,7 @@ void MyRobot::TeleopPeriodic()
         break;
       }
     }
-    case EXTENDING
-    {
+    case EXTENDING: {
       shooterVic1.Set(MAX_SPEED);
       shooterVic2.Set(MAX_SPEED);
       shooterSol.Set(true);
@@ -172,8 +171,7 @@ void MyRobot::TeleopPeriodic()
       }
     }
   
-    case RETRACTING
-    {
+    case RETRACTING: {
       //the shooter vics remain at maximum speed, because it saves energy if shooting rapidly
       shooterVic1.Set(MAX_SPEED);
       shooterVic2.Set(MAX_SPEED);
